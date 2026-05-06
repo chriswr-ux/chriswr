@@ -1,896 +1,1512 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Chris Reynolds | Portfolio</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<style>
-:root {
-  --bg: #050509;
-  --bg-alt: #0b0b12;
-  --accent: #ff1744;
-  --accent-soft: #ff5252;
-  --text: #f5f5f5;
-  --muted: #9e9e9e;
-  --card: rgba(10, 10, 18, 0.9);
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --radius-lg: 18px;
-  --radius-md: 14px;
-  --radius-pill: 999px;
-  --shadow-strong: 0 24px 60px rgba(0, 0, 0, 0.9);
-  --transition-fast: 0.18s ease-out;
-  --transition-med: 0.3s ease-out;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1a0b12 0, #050509 55%);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Animated background gradient */
-body::before {
-  content: "";
-  position: fixed;
-  inset: -40%;
-  background:
-    radial-gradient(circle at 0 0, rgba(255, 23, 68, 0.18) 0, transparent 55%),
-    radial-gradient(circle at 100% 0, rgba(255, 23, 68, 0.12) 0, transparent 60%),
-    radial-gradient(circle at 50% 100%, rgba(255, 23, 68, 0.18) 0, transparent 60%);
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: -3;
-  animation: bgSweep 22s ease-in-out infinite alternate;
-}
-
-@keyframes bgSweep {
-  0% {
-    transform: translate3d(-4%, 0, 0) rotate(-2deg);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate3d(3%, -2%, 0) rotate(1deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(6%, 1%, 0) rotate(-1deg);
-    opacity: 0.8;
-  }
-}
-
-/* Tiny floating particles */
-#particles {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-}
-
-/* Layout */
-.page {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 90px 20px 60px;
-}
-
-/* Navbar */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 26px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(5, 5, 10, 0.7);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 23, 68, 0.35);
-  z-index: 20;
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-logo-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 0, #ff1744 0, #c51162 60%);
-  box-shadow:
-    0 0 18px rgba(255, 23, 68, 0.9),
-    0 0 40px rgba(255, 23, 68, 0.5);
-  position: relative;
-  overflow: hidden;
-}
-
-.nav-logo-mark::before {
-  content: "";
-  position: absolute;
-  inset: 20%;
-  background:
-    radial-gradient(circle at 50% 30%, rgba(0, 0, 0, 0.9) 0, transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(0, 0, 0, 0.9) 0, transparent 55%);
-  clip-path: polygon(
-    10% 40%, 25% 25%, 35% 35%, 50% 15%, 65% 35%, 75% 25%, 90% 40%,
-    80% 55%, 70% 60%, 60% 70%, 50% 85%, 40% 70%, 30% 60%, 20% 55%
-  );
-}
-
-.nav-logo-text {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-}
-
-.nav-logo-text span {
-  color: var(--accent-soft);
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 18px;
-  font-size: 0.86rem;
-}
-
-nav a {
-  color: var(--text);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.78rem;
-  padding: 6px 0;
-  position: relative;
-  transition: color var(--transition-fast);
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  transition: width var(--transition-fast);
-}
-
-nav a:hover {
-  color: var(--accent-soft);
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-/* Hero */
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(260px, 2fr);
-  gap: 26px;
-  align-items: center;
-  margin-top: 40px;
-}
-
-@media (max-width: 860px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-}
-
-.hero-main h1 {
-  font-size: clamp(2.6rem, 4vw, 3.2rem);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.hero-main h1 span {
-  color: var(--accent);
-  text-shadow: 0 0 22px rgba(255, 23, 68, 0.9);
-}
-
-.hero-main .subtitle {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-
-.hero-main p {
-  font-size: 0.96rem;
-  color: #e0e0e0;
-  max-width: 460px;
-  line-height: 1.6;
-}
-
-.hero-meta {
-  margin-top: 18px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.meta-pill {
-  border-radius: var(--radius-pill);
-  padding: 6px 12px;
-  border: 1px solid rgba(255, 23, 68, 0.5);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 23, 68, 0.18),
-    rgba(5, 5, 10, 0.9)
-  );
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  backdrop-filter: blur(10px);
-}
-
-.hero-actions {
-  margin-top: 22px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.btn {
-  border-radius: var(--radius-pill);
-  padding: 9px 18px;
-  font-size: 0.82rem;
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background var(--transition-fast), transform var(--transition-fast),
-    box-shadow var(--transition-fast), border-color var(--transition-fast);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #ff1744, #ff5252);
-  color: #050509;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  box-shadow:
-    0 0 18px rgba(255, 23, 68, 0.9),
-    0 14px 40px rgba(0, 0, 0, 0.95);
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 0 24px rgba(255, 23, 68, 1),
-    0 18px 50px rgba(0, 0, 0, 0.98);
-}
-
-.btn-ghost {
-  border-color: rgba(255, 23, 68, 0.5);
-  color: var(--accent-soft);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 23, 68, 0.12),
-    rgba(5, 5, 10, 0.9)
-  );
-}
-
-.btn-ghost:hover {
-  border-color: rgba(255, 23, 68, 0.9);
-}
-
-/* Hero side card */
-.hero-side {
-  background: var(--card);
-  border-radius: 24px;
-  padding: 20px 18px 16px;
-  border: 1px solid rgba(255, 23, 68, 0.4);
-  box-shadow: var(--shadow-strong);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-side::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background:
-    radial-gradient(circle at 0 0, rgba(255, 23, 68, 0.25) 0, transparent 55%),
-    radial-gradient(circle at 100% 100%, rgba(255, 23, 68, 0.18) 0, transparent 60%);
-  opacity: 0.9;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.hero-side-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-}
-
-.hero-side h2 {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-}
-
-.hero-side strong {
-  display: block;
-  margin-top: 4px;
-  font-size: 0.9rem;
-  color: var(--accent-soft);
-}
-
-.bat-orb {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 0, #ff1744 0, #c51162 55%);
-  box-shadow:
-    0 0 26px rgba(255, 23, 68, 0.9),
-    0 0 70px rgba(255, 23, 68, 0.6);
-  position: relative;
-  overflow: hidden;
-  transform: rotate(-10deg);
-}
-
-.bat-orb::before {
-  content: "";
-  position: absolute;
-  inset: 10%;
-  background:
-    radial-gradient(circle at 50% 30%, rgba(0, 0, 0, 0.9) 0, transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(0, 0, 0, 0.9) 0, transparent 55%);
-  clip-path: polygon(
-    10% 40%, 25% 25%, 35% 35%, 50% 15%, 65% 35%, 75% 25%, 90% 40%,
-    80% 55%, 70% 60%, 60% 70%, 50% 85%, 40% 70%, 30% 60%, 20% 55%
-  );
-}
-
-.hero-side p {
-  margin-top: 10px;
-  font-size: 0.86rem;
-  color: #e0e0e0;
-  line-height: 1.5;
-}
-
-.hero-side-footer {
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-.hero-side-footer span.badge {
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(5, 5, 10, 0.9);
-}
-
-/* Sections */
-section {
-  margin-top: 40px;
-}
-
-.section-title {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.section-title::before {
-  content: "";
-  width: 22px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-}
-
-/* Grid layout for main content */
-.main-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(260px, 2fr);
-  gap: 22px;
-}
-
-@media (max-width: 860px) {
-  .main-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Cards */
-.card {
-  background: var(--card);
-  border-radius: var(--radius-lg);
-  padding: 16px 16px 14px;
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-strong);
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--transition-med), box-shadow var(--transition-med),
-    border-color var(--transition-med);
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background: radial-gradient(circle at 0 0, rgba(255, 23, 68, 0.16) 0, transparent 55%);
-  opacity: 0.7;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.98);
-  border-color: rgba(255, 23, 68, 0.4);
-}
-
-.card h3 {
-  font-size: 1rem;
-  margin-bottom: 6px;
-}
-
-.card p {
-  font-size: 0.9rem;
-  color: #e0e0e0;
-  line-height: 1.6;
-}
-
-/* Timeline style */
-.timeline {
-  margin-top: 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  padding-left: 14px;
-}
-
-.timeline-item {
-  margin-top: 10px;
-  position: relative;
-  padding-left: 4px;
-}
-
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -15px;
-  top: 6px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(255, 23, 68, 0.9);
-}
-
-.timeline-item h4 {
-  font-size: 0.9rem;
-  margin-bottom: 2px;
-}
-
-.timeline-item span.meta {
-  font-size: 0.78rem;
-  color: var(--muted);
-  display: block;
-  margin-bottom: 4px;
-}
-
-.timeline-item ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: 0.86rem;
-  color: #d0d0d0;
-}
-
-.timeline-item ul li {
-  margin-bottom: 3px;
-  position: relative;
-  padding-left: 12px;
-}
-
-.timeline-item ul li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--accent-soft);
-}
-
-/* Tags / pills */
-.pill-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.pill {
-  font-size: 0.78rem;
-  padding: 5px 10px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(5, 5, 10, 0.9);
-  color: #e0e0e0;
-}
-
-.pill.accent {
-  border-color: rgba(255, 23, 68, 0.7);
-  color: var(--accent-soft);
-  background: rgba(255, 23, 68, 0.12);
-}
-
-/* Right column mini cards */
-.mini-card {
-  background: var(--card);
-  border-radius: var(--radius-lg);
-  padding: 14px 14px 12px;
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.9);
-  margin-bottom: 14px;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--transition-med), box-shadow var(--transition-med),
-    border-color var(--transition-med);
-}
-
-.mini-card::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background: radial-gradient(circle at 0 0, rgba(255, 23, 68, 0.16) 0, transparent 55%);
-  opacity: 0.6;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.mini-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.96);
-  border-color: rgba(255, 23, 68, 0.4);
-}
-
-.mini-card h3 {
-  font-size: 0.95rem;
-  margin-bottom: 4px;
-}
-
-.mini-card p {
-  font-size: 0.86rem;
-  color: #d0d0d0;
-  line-height: 1.5;
-}
-
-.tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.tag {
-  font-size: 0.76rem;
-  padding: 4px 9px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(5, 5, 10, 0.9);
-  color: #e0e0e0;
-}
-
-.tag.accent {
-  border-color: rgba(255, 23, 68, 0.7);
-  color: var(--accent-soft);
-  background: rgba(255, 23, 68, 0.12);
-}
-
-/* Footer */
-footer {
-  margin-top: 30px;
-  font-size: 0.78rem;
-  color: var(--muted);
-  text-align: center;
-}
-
-footer span {
-  color: var(--accent-soft);
-}
-
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-}
-</style>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISSN Desk Simulator v2.0 - Elite Cyber Operations</title>
+    <meta name="description" content="Advanced cyber operations simulator with pen testing, bug hunting, and AI-powered service desk. Master cybersecurity in this immersive training environment.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        :root {
+            --primary-blue: #0066ff;
+            --secondary-blue: #0099ff;
+            --accent-cyan: #00ffff;
+            --accent-purple: #9966ff;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border-light: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-text: #f1f5f9;
+            --dark-border: #334155;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 102, 255, 0.1);
+        }
+        
+        .dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+        }
+        
+        .gradient-border {
+            position: relative;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+            border-radius: inherit;
+            z-index: -1;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+        }
+        
+        .neon-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 102, 255, 0.5);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--primary-blue);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-blue) }
+        }
+        
+        .hacker-terminal {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border: 1px solid #334155;
+            font-family: 'JetBrains Mono', monospace;
+            color: #00ff41;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 3px;
+        }
+        
+        .dark-mode .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .dark-mode .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 153, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 153, 255, 0.1) 1px, transparent 1px);
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-dark);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+        }
+        
+        .dark-mode .tooltip:hover::after {
+            background: var(--dark-card);
+            color: var(--dark-text);
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .status-online { background-color: var(--success); }
+        .status-warning { background-color: var(--warning); }
+        .status-offline { background-color: var(--danger); }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .dark-mode .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+        }
+    </style>
 </head>
-<body>
-<canvas id="particles"></canvas>
-
-<nav>
-  <div class="nav-logo">
-    <div class="nav-logo-mark"></div>
-    <div class="nav-logo-text">
-      <span>Chris</span> Reynolds
+<body class="min-h-screen flex flex-col">
+    <!-- Theme Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="glass-card w-10 h-10 rounded-full flex items-center justify-center text-lg hover:neon-glow transition-all">
+            <i class="fas fa-moon"></i>
+        </button>
     </div>
-  </div>
-  <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<div class="page">
-  <!-- HERO -->
-  <section class="hero" id="about">
-    <div class="hero-main">
-      <h1><span>Chris</span> Reynolds</h1>
-      <div class="subtitle">Information Technology · Wrestler · Tewksbury, MA</div>
-      <p>
-        16-year-old IT student at Shawsheen Valley Tech, combining discipline from
-        wrestling with focus on technology. I like building, breaking, and fixing
-        things—computers, websites, and skills.
-      </p>
-      <div class="hero-meta">
-        <div class="meta-pill">📍 Tewksbury, Massachusetts</div>
-        <div class="meta-pill">🏫 Shawsheen Valley Technical High School</div>
-        <div class="meta-pill">🤼 Wrestling · High intensity · High focus</div>
-      </div>
-      <div class="hero-actions">
-        <a href="#experience" class="btn btn-primary">View journey</a>
-        <a href="#contact" class="btn btn-ghost">Contact</a>
-      </div>
-    </div>
-
-    <aside class="hero-side">
-      <div class="hero-side-top">
-        <div>
-          <h2>Profile snapshot</h2>
-          <strong>Student · Technologist · Competitor</strong>
-        </div>
-        <div class="bat-orb"></div>
-      </div>
-      <p>
-        Learning IT by doing: labs, troubleshooting, and small projects. Wrestling
-        keeps my mindset sharp—show up, work hard, adjust, repeat.
-      </p>
-      <div class="hero-side-footer">
-        <span>“Gotham-level focus. No shortcuts.”</span>
-      </div>
-    </aside>
-  </section>
-
-  <!-- MAIN GRID -->
-  <div class="main-grid">
-    <div>
-      <!-- EXPERIENCE -->
-      <section id="experience">
-        <div class="section-title">Education & experience</div>
-        <div class="card">
-          <h3>Shawsheen Valley Technical High School · Information Technology</h3>
-          <p>
-            Building a foundation in IT: hardware, software, networking, and how
-            tech supports real people and real work.
-          </p>
-          <div class="timeline">
-            <div class="timeline-item">
-              <h4>Information Technology Student</h4>
-              <span class="meta">Billerica, MA · 2024 – Present</span>
-              <ul>
-                <li>Hands-on labs with computers, operating systems, and basic networking.</li>
-                <li>Learning to troubleshoot instead of panic when something breaks.</li>
-                <li>Working with classmates on projects and problem-solving challenges.</li>
-              </ul>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold gradient-text">ISSN Desk Simulator</h1>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Integrated Security Systems Network</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4" id="stats-container">
+                    <!-- Stats rendered via JS -->
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleGameMode('service')" id="btn-service" class="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 transition">
+                        <i class="fas fa-headset mr-2"></i>Service Desk
+                    </button>
+                    <button onclick="toggleGameMode('pentest')" id="btn-pentest" class="px-4 py-2 rounded-lg border border-blue-500 text-blue-500 dark:text-blue-400 font-medium hover:bg-blue-50 dark:hover:bg-blue-500/10 transition">
+                        <i class="fas fa-user-secret mr-2"></i>Pen Testing
+                    </button>
+                    <button onclick="toggleGameMode('bug')" id="btn-bug" class="px-4 py-2 rounded-lg border border-purple-500 text-purple-500 dark:text-purple-400 font-medium hover:bg-purple-50 dark:hover:bg-purple-500/10 transition">
+                        <i class="fas fa-bug mr-2"></i>Bug Hunting
+                    </button>
+                </div>
             </div>
-            <div class="timeline-item">
-              <h4>Wrestling Team Member</h4>
-              <span class="meta">Tewksbury / Shawsheen Valley Tech · 2024 – Present</span>
-              <ul>
-                <li>Training and competing with a focus on discipline and resilience.</li>
-                <li>Balancing school, practice, and personal goals.</li>
-                <li>Showing up for teammates and representing the school with respect.</li>
-              </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-6">
+        <!-- Service Desk Mode -->
+        <div id="service-desk-mode" class="fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left Panel - Ticket Queue -->
+                <div class="lg:col-span-3">
+                    <div class="glass-card rounded-xl p-4 mb-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-bold flex items-center gap-2">
+                                <i class="fas fa-ticket-alt text-blue-500"></i>
+                                Ticket Queue
+                            </h2>
+                            <span id="ticket-count" class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium px-3 py-1 rounded-full">0</span>
+                        </div>
+                        
+                        <div class="flex gap-2 mb-4">
+                            <select id="filter-priority" onchange="filterTickets()" class="flex-1 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="all">All Priorities</option>
+                                <option value="critical">Critical</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            <select id="filter-category" onchange="filterTickets()" class="flex-1 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+                        
+                        <div id="ticket-list" class="space-y-2 max-h-[calc(100vh-280px)] overflow-y-auto scrollbar-thin">
+                            <!-- Tickets rendered via JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="glass-card rounded-xl p-4">
+                        <h3 class="font-bold mb-3 flex items-center gap-2">
+                            <i class="fas fa-chart-line text-blue-500"></i>
+                            Performance
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Response Time</span>
+                                    <span class="font-medium">4.2m</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Satisfaction</span>
+                                    <span class="font-medium">94%</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 94%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Panel - Active Ticket -->
+                <div class="lg:col-span-6">
+                    <div id="active-ticket-panel" class="glass-card rounded-xl p-6 min-h-[600px] flex flex-col">
+                        <div id="empty-state" class="flex-1 flex flex-col items-center justify-center text-center p-8">
+                            <div class="w-24 h-24 gradient-bg rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-terminal text-white text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Select a Ticket to Begin</h3>
+                            <p class="text-gray-500 dark:text-gray-400 mb-6">Choose from the queue to start assisting users</p>
+                            <div class="grid grid-cols-2 gap-3 max-w-md">
+                                <div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
+                                    <div class="text-sm font-medium mb-1">Avg. Response</div>
+                                    <div class="text-2xl font-bold gradient-text">4.2m</div>
+                                </div>
+                                <div class="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800">
+                                    <div class="text-sm font-medium mb-1">Resolved Today</div>
+                                    <div class="text-2xl font-bold text-green-600 dark:text-green-400">18</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="ticket-workspace" class="hidden flex-1 flex flex-col">
+                            <!-- Ticket Header -->
+                            <div class="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <span id="ticket-id" class="text-sm font-mono text-gray-500 dark:text-gray-400"></span>
+                                        <h3 id="ticket-title" class="text-xl font-bold mt-1"></h3>
+                                    </div>
+                                    <span id="ticket-priority" class="px-3 py-1 rounded-full text-sm font-medium"></span>
+                                </div>
+                                <div class="flex flex-wrap gap-4 text-sm">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-user text-gray-400"></i>
+                                        <span id="ticket-user"></span>
+                                    </span>
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-tag text-gray-400"></i>
+                                        <span id="ticket-category"></span>
+                                    </span>
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-clock text-gray-400"></i>
+                                        <span id="ticket-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Interface -->
+                            <div class="flex-1 mb-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold flex items-center gap-2">
+                                        <i class="fas fa-comments text-blue-500"></i>
+                                        Live Chat
+                                    </h4>
+                                    <div class="flex items-center gap-2">
+                                        <span class="status-indicator status-online"></span>
+                                        <span class="text-sm text-green-600 dark:text-green-400">User Online</span>
+                                    </div>
+                                </div>
+                                <div id="chat-container" class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 h-64 overflow-y-auto scrollbar-thin space-y-3">
+                                    <!-- Chat messages rendered via JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- Command Terminal -->
+                            <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                                <div class="bg-gray-800 dark:bg-gray-900 px-4 py-2 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-terminal text-green-400"></i>
+                                        <span class="text-sm font-mono text-green-400">SYSADMIN_TERMINAL</span>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="clearTerminal()" class="text-xs text-gray-400 hover:text-white">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="command-output" class="hacker-terminal p-4 h-32 overflow-y-auto scrollbar-thin font-mono text-sm"></div>
+                                <div class="bg-gray-900 dark:bg-black px-4 py-3 border-t border-gray-700">
+                                    <div class="flex items-center">
+                                        <span class="text-green-400 mr-2">root@issn:~$</span>
+                                        <input type="text" id="command-input" class="flex-1 bg-transparent outline-none text-green-400 font-mono" placeholder="Type command..." onkeypress="handleCommand(event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Tools & Actions -->
+                <div class="lg:col-span-3">
+                    <!-- Tools -->
+                    <div class="glass-card rounded-xl p-4 mb-4">
+                        <h3 class="font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-tools text-blue-500"></i>
+                            Diagnostic Tools
+                        </h3>
+                        <div id="tools-grid" class="grid grid-cols-2 gap-2">
+                            <!-- Tools rendered via JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- System Status -->
+                    <div class="glass-card rounded-xl p-4 mb-4">
+                        <h3 class="font-bold mb-3 flex items-center gap-2">
+                            <i class="fas fa-server text-blue-500"></i>
+                            System Status
+                        </h3>
+                        <div id="network-status" class="space-y-2">
+                            <!-- Status items rendered via JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="glass-card rounded-xl p-4">
+                        <h3 class="font-bold mb-3">Ticket Actions</h3>
+                        <div class="space-y-2">
+                            <button onclick="resolveTicket()" id="btn-resolve" class="w-full py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <i class="fas fa-check-circle"></i>
+                                Resolve Ticket
+                            </button>
+                            <button onclick="escalateTicket()" class="w-full py-3 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2">
+                                <i class="fas fa-arrow-up"></i>
+                                Escalate
+                            </button>
+                            <button onclick="closeTicket()" class="w-full py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition flex items-center justify-center gap-2">
+                                <i class="fas fa-times"></i>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
 
-      <!-- PROJECTS -->
-      <section id="projects">
-        <div class="section-title">Projects & interests</div>
-        <div class="card">
-          <h3>Early-stage tech projects</h3>
-          <p>
-            I’m still early in my journey, but I’m already experimenting with
-            hardware and the web—learning by building.
-          </p>
-          <div class="timeline">
-            <div class="timeline-item">
-              <h4>Personal PC & Setup</h4>
-              <span class="meta">Hardware · Performance · Maintenance</span>
-              <ul>
-                <li>Exploring how components like CPU, RAM, and storage affect performance.</li>
-                <li>Keeping systems updated, backed up, and running smoothly.</li>
-                <li>Customizing setups for school, gaming, and learning.</li>
-              </ul>
+        <!-- Pen Testing Mode -->
+        <div id="pentest-mode" class="hidden fade-in">
+            <div class="glass-card rounded-xl p-6 mb-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold gradient-text mb-2">Penetration Testing Lab</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Practice ethical hacking in a controlled environment</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">
+                            <i class="fas fa-user-secret mr-1"></i>Hacker Rank: Elite
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Target Selection -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+                            <h3 class="font-bold mb-4">Target Systems</h3>
+                            <div id="target-list" class="space-y-3">
+                                <!-- Targets rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Attack Interface -->
+                    <div class="lg:col-span-2">
+                        <div class="hacker-terminal rounded-xl p-4 h-96 flex flex-col">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-crosshairs text-red-400"></i>
+                                    <span class="font-mono text-green-400">ATTACK_CONSOLE</span>
+                                </div>
+                                <div id="target-status" class="text-sm text-gray-400">No target selected</div>
+                            </div>
+                            
+                            <div id="pentest-output" class="flex-1 overflow-y-auto scrollbar-thin font-mono text-sm mb-4 space-y-2">
+                                <div class="text-cyan-400">Welcome to Pen Testing Lab v2.0</div>
+                                <div class="text-gray-400">Select a target system to begin your attack simulation.</div>
+                                <div class="text-gray-400">Available commands: scan, exploit, enumerate, crack, pivot</div>
+                            </div>
+                            
+                            <div class="border-t border-gray-700 pt-4">
+                                <div class="flex items-center">
+                                    <span class="text-red-400 mr-2">hacker@issn:~$</span>
+                                    <input type="text" id="pentest-input" class="flex-1 bg-transparent outline-none text-white font-mono" placeholder="Enter attack command..." onkeypress="handlePentestCommand(event)">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-3 mt-4">
+                            <button onclick="runPentestTool('scan')" class="p-3 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg transition flex items-center justify-center gap-2">
+                                <i class="fas fa-search text-blue-400"></i>
+                                <span class="text-sm">Scan</span>
+                            </button>
+                            <button onclick="runPentestTool('exploit')" class="p-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg transition flex items-center justify-center gap-2">
+                                <i class="fas fa-bolt text-red-400"></i>
+                                <span class="text-sm">Exploit</span>
+                            </button>
+                            <button onclick="runPentestTool('crack')" class="p-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg transition flex items-center justify-center gap-2">
+                                <i class="fas fa-key text-purple-400"></i>
+                                <span class="text-sm">Crack</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="timeline-item">
-              <h4>Web & UI Experiments</h4>
-              <span class="meta">HTML · CSS · Visual design</span>
-              <ul>
-                <li>Building small sites and layouts, including this Batman-themed portfolio.</li>
-                <li>Learning how design, color, and motion change how a site feels.</li>
-                <li>Getting comfortable reading and tweaking code instead of being scared of it.</li>
-              </ul>
+        </div>
+
+        <!-- Bug Hunting Mode -->
+        <div id="bug-mode" class="hidden fade-in">
+            <div class="glass-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold gradient-text mb-2">Bug Hunting Arena</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Find and exploit vulnerabilities in web applications</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 rounded-full text-sm font-medium">
+                            <i class="fas fa-bug mr-1"></i>Bounty: $5,240
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <!-- Vulnerable Apps -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+                            <h3 class="font-bold mb-4">Vulnerable Applications</h3>
+                            <div id="app-list" class="space-y-3">
+                                <!-- Apps rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Web Interface -->
+                    <div class="lg:col-span-2">
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                            <div class="bg-gray-100 dark:bg-gray-800 px-4 py-3 flex items-center gap-2">
+                                <div class="flex gap-1">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <div id="current-url" class="flex-1 bg-white dark:bg-gray-900 px-3 py-1 rounded text-sm font-mono">https://vuln-app.issn.test</div>
+                            </div>
+                            <div id="web-interface" class="bg-white dark:bg-gray-900 p-6 min-h-[400px]">
+                                <div class="text-center py-20 text-gray-400">
+                                    <i class="fas fa-globe text-4xl mb-4"></i>
+                                    <p>Select a vulnerable application to begin testing</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-3 mt-4">
+                            <button onclick="runBugTool('xss')" class="p-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg transition flex flex-col items-center justify-center">
+                                <i class="fas fa-code text-red-400 text-lg mb-1"></i>
+                                <span class="text-xs">XSS Test</span>
+                            </button>
+                            <button onclick="runBugTool('sqli')" class="p-3 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg transition flex flex-col items-center justify-center">
+                                <i class="fas fa-database text-blue-400 text-lg mb-1"></i>
+                                <span class="text-xs">SQLi</span>
+                            </button>
+                            <button onclick="runBugTool('csrf')" class="p-3 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-lg transition flex flex-col items-center justify-center">
+                                <i class="fas fa-exchange-alt text-green-400 text-lg mb-1"></i>
+                                <span class="text-xs">CSRF</span>
+                            </button>
+                            <button onclick="runBugTool('idor')" class="p-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg transition flex flex-col items-center justify-center">
+                                <i class="fas fa-user-secret text-purple-400 text-lg mb-1"></i>
+                                <span class="text-xs">IDOR</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Bug Reports -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 h-full">
+                            <h3 class="font-bold mb-4">Found Vulnerabilities</h3>
+                            <div id="bug-reports" class="space-y-3">
+                                <div class="text-center py-8 text-gray-400">
+                                    <i class="fas fa-search mb-2"></i>
+                                    <p class="text-sm">No vulnerabilities found yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="pill-row">
-            <span class="pill accent">Curious about cybersecurity</span>
-            <span class="pill">Interested in networking</span>
-            <span class="pill">Enjoys hands-on learning</span>
-            <span class="pill">Open to mentorship</span>
-          </div>
         </div>
-      </section>
-    </div>
+    </main>
 
-    <!-- RIGHT COLUMN -->
-    <div>
-      <section id="skills">
-        <div class="section-title">Skills & strengths</div>
-        <div class="mini-card">
-          <h3>Technical foundations</h3>
-          <p>Not an expert yet—but serious about getting better every month.</p>
-          <div class="tag-row">
-            <span class="tag accent">Computer basics</span>
-            <span class="tag">PC setup & care</span>
-            <span class="tag">OS & updates</span>
-            <span class="tag">Networking basics</span>
-          </div>
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-gray-800 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-shield-alt text-blue-500"></i>
+                        <span class="font-bold">ISSN Security Network</span>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Advanced Cyber Training Simulator v2.0</p>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <button onclick="toggleCourseModal()" class="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Training</span>
+                    </button>
+                    <button onclick="showLeaderboard()" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300">
+                        <i class="fas fa-trophy"></i>
+                        <span>Leaderboard</span>
+                    </button>
+                    <button onclick="showSettings()" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </div>
         </div>
+    </footer>
 
-        <div class="mini-card">
-          <h3>Mindset from wrestling</h3>
-          <p>
-            Wrestling forces you to deal with pressure, fatigue, and failure. That
-            mindset transfers straight into tech.
-          </p>
-          <div class="tag-row">
-            <span class="tag accent">Resilient</span>
-            <span class="tag">Coachable</span>
-            <span class="tag">Competitive</span>
-            <span class="tag">Goal-driven</span>
-          </div>
-        </div>
-
-        <div class="mini-card">
-          <h3>How I work</h3>
-          <p>
-            I ask questions, take feedback, and don’t shut down when something’s
-            hard. I’d rather figure it out than quit.
-          </p>
-          <div class="tag-row">
-            <span class="tag accent">Learns by doing</span>
-            <span class="tag">Team player</span>
-            <span class="tag">Respectful</span>
-            <span class="tag">Shows up</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact">
-        <div class="section-title">Contact</div>
-        <div class="mini-card">
-          <h3>Let’s connect</h3>
-          <p>
-            Looking for internships, job shadowing, or chances to learn from people
-            already working in tech.
-          </p>
-          <div class="tag-row">
-            <!-- Replace with your real email when ready -->
-            <span class="tag accent">Email: chriswreynolds370@gmail.com</span>
-            <span class="tag">Location: Tewksbury, MA</span>
-          </div>
-          <p style="margin-top: 8px; font-size: 0.8rem; color: #bdbdbd;">
+    <!-- Training Modal -->
+    <div id="course-modal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+            <div class="border-b border-gray-200 dark:border-gray-700 p-6 flex justify-between items-center">
+                <h2 class="text-2xl font-bold gradient-text">
+                    <i class="fas fa-graduation-cap mr-2"></i>
+                    Cybersecurity Training
+                </h2>
+                <button onclick="toggleCourseModal()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
             
+            <div class="flex flex-1 overflow-hidden">
+                <div class="w-1/3 border-r border-gray-200 dark:border-gray-700 overflow-y-auto p-6">
+                    <div id="course-modules-list" class="space-y-4">
+                        <!-- Course modules rendered via JS -->
+                    </div>
+                </div>
+                
+                <div class="w-2/3 overflow-y-auto p-6" id="course-content">
+                    <div class="text-center py-20">
+                        <div class="w-20 h-20 gradient-bg rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-book-open text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Select a Course Module</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Choose from the left panel to start learning</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
     </div>
-  </div>
 
-  <footer>
-    Designed for <span>Chris Reynolds</span> · Gotham‑style modern portfolio.
-  </footer>
-</div>
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg transform translate-y-20 transition-transform duration-300 z-50 max-w-sm">
+        <div class="p-4 flex items-start gap-3">
+            <div id="toast-icon" class="w-10 h-10 rounded-full flex items-center justify-center">
+                <i class="fas fa-info-circle text-blue-500"></i>
+            </div>
+            <div class="flex-1">
+                <h4 id="toast-title" class="font-bold"></h4>
+                <p id="toast-message" class="text-sm text-gray-600 dark:text-gray-400"></p>
+            </div>
+            <button onclick="hideToast()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
 
-<script>
-// tiny red particles for motion
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-let particles = [];
-let w, h;
+    <script>
+        // ==================== DATA LAYER ====================
+        
+        // Player Stats
+        let playerStats = {
+            level: 1,
+            xp: 0,
+            xpToNext: 100,
+            ticketsResolved: 0,
+            reputation: 100,
+            currentTicket: null,
+            completedCourses: [],
+            pentestScore: 0,
+            bugBounty: 0,
+            gameMode: 'service'
+        };
 
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
+        // Ticket Categories
+        const categories = [
+            "Password Reset", "Network Issue", "Software Install", "Hardware Failure",
+            "Email Problem", "Security Incident", "Access Request", "Printer Issue",
+            "VPN Connection", "Backup Recovery", "Virus/Malware", "System Crash"
+        ];
 
-class Particle {
-  constructor() {
-    this.reset();
-  }
-  reset() {
-    this.x = Math.random() * w;
-    this.y = Math.random() * h;
-    this.size = Math.random() * 2 + 0.6;
-    this.speedX = (Math.random() - 0.5) * 0.4;
-    this.speedY = (Math.random() - 0.5) * 0.4;
-    this.alpha = Math.random() * 0.6 + 0.2;
-  }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x < -10 || this.x > w + 10 || this.y < -10 || this.y > h + 10) {
-      this.reset();
-    }
-  }
-  draw() {
-    ctx.fillStyle = `rgba(255, 23, 68, ${this.alpha})`;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = "#ff1744";
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
+        // Generate 100+ Tickets
+        const ticketTemplates = [
+            { title: "Forgot password - Cannot access email", category: "Password Reset", priority: "high", tools: ["reset-password", "check-logs"] },
+            { title: "VPN connection dropping every 5 minutes", category: "VPN Connection", priority: "critical", tools: ["ping", "check-vpn-logs", "restart-service"] },
+            { title: "Printer not responding on floor 3", category: "Printer Issue", priority: "medium", tools: ["ping", "restart-spooler", "check-queue"] },
+            { title: "Suspicious email asking for credentials", category: "Security Incident", priority: "critical", tools: ["analyze-headers", "quarantine", "check-blacklist"] },
+            { title: "Need Adobe Creative Suite installed", category: "Software Install", priority: "low", tools: ["check-license", "remote-install", "verify-install"] },
+            { title: "Blue screen of death on workstation WS-442", category: "System Crash", priority: "high", tools: ["check-logs", "run-diag", "memory-test"] },
+            { title: "Cannot access shared drive \\\\\\\\server\\\\finance", category: "Access Request", priority: "high", tools: ["check-permissions", "test-access", "reset-ad"] },
+            { title: "Laptop won't turn on after spill", category: "Hardware Failure", priority: "critical", tools: ["remote-diag", "create-ticket", "escalate-hardware"] },
+            { title: "Outlook crashes when opening attachments", category: "Email Problem", priority: "medium", tools: ["repair-office", "scan-virus", "check-storage"] },
+            { title: "Suspected malware infection on PC-889", category: "Virus/Malware", priority: "critical", tools: ["full-scan", "isolate", "clean-registry"] },
+            { title: "WiFi not working in conference room B", category: "Network Issue", priority: "medium", tools: ["check-ap", "reset-switch", "signal-test"] },
+            { title: "Database backup failed last night", category: "Backup Recovery", priority: "high", tools: ["check-storage", "verify-backup", "restart-service"] },
+            { title: "New employee needs domain account", category: "Access Request", priority: "medium", tools: ["create-ad", "assign-groups", "notify-user"] },
+            { title: "Screen flickering on dual monitor setup", category: "Hardware Failure", priority: "low", tools: ["update-drivers", "check-cables", "test-display"] },
+            { title: "Cannot connect to SQL server from app", category: "Network Issue", priority: "high", tools: ["test-port", "check-firewall", "verify-dns"] }
+        ];
 
-function initParticles() {
-  particles = [];
-  for (let i = 0; i < 120; i++) {
-    particles.push(new Particle());
-  }
-}
-initParticles();
+        // Generate 100 tickets
+        const tickets = [];
+        const firstNames = ["Alex", "Jordan", "Casey", "Morgan", "Riley", "Quinn", "Avery", "Sam", "Taylor", "Drew", "Cameron", "Reese", "Parker", "Sage", "Kai"];
+        const lastNames = ["Chen", "Rodriguez", "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Wilson", "Martinez", "Anderson", "Taylor", "Thomas"];
+        
+        for (let i = 0; i < 100; i++) {
+            const template = ticketTemplates[i % ticketTemplates.length];
+            const user = firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)];
+            const id = "ISSN-" + String(1000 + i).padStart(4, '0');
+            
+            tickets.push({
+                id: id,
+                title: template.title + (i > 14 ? " [SIM-" + i + "]" : ""),
+                category: template.category,
+                priority: template.priority,
+                user: user,
+                status: "open",
+                description: generateDescription(template),
+                tools: template.tools,
+                xpReward: calculateXP(template.priority),
+                chatHistory: [],
+                resolved: false,
+                timeOpened: new Date(Date.now() - Math.random() * 86400000).toLocaleString()
+            });
+        }
 
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  particles.forEach((p) => {
-    p.update();
-    p.draw();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
+        function generateDescription(template) {
+            const descriptions = {
+                "Password Reset": "User reports inability to access their corporate email account. Attempted password recovery but not receiving reset emails.",
+                "Network Issue": "Intermittent connectivity issues reported. User unable to access internal resources and external websites.",
+                "Software Install": "Department requires specific software for project completion. License verification needed before installation.",
+                "Hardware Failure": "Hardware component showing signs of failure. Diagnostic tests needed to determine repair or replacement.",
+                "Email Problem": "Email client malfunctioning. User cannot send or receive messages. Possible corruption in local PST file.",
+                "Security Incident": "Potential security breach detected. Phishing attempt or malware infection suspected.",
+                "Access Request": "User requires access to specific network resources or shared drives. Manager approval obtained.",
+                "Printer Issue": "Print spooler service may be stuck. Multiple documents stuck in queue.",
+                "VPN Connection": "Remote user unable to establish secure connection. Certificate may be expired.",
+                "Backup Recovery": "Automated backup job failed with error code 0x80070005. Storage capacity issues suspected.",
+                "Virus/Malware": "Endpoint protection alerting on suspicious process behavior. System running slow.",
+                "System Crash": "Critical system failure resulting in BSOD. Memory dump analysis needed."
+            };
+            return descriptions[template.category] || "Technical issue requires investigation.";
+        }
+
+        function calculateXP(priority) {
+            const xp = { "critical": 50, "high": 30, "medium": 20, "low": 10 };
+            return xp[priority] || 10;
+        }
+
+        // Tools Data
+        const tools = [
+            { id: "ping", name: "Ping Test", icon: "fa-network-wired", desc: "Test network connectivity", color: "blue" },
+            { id: "check-logs", name: "View Logs", icon: "fa-file-alt", desc: "Check system logs", color: "gray" },
+            { id: "reset-password", name: "Reset PW", icon: "fa-key", desc: "Reset user password", color: "green" },
+            { id: "scan-virus", name: "Virus Scan", icon: "fa-shield-virus", desc: "Run malware scan", color: "red" },
+            { id: "restart-service", name: "Restart Svc", icon: "fa-sync", desc: "Restart service", color: "yellow" },
+            { id: "check-permissions", name: "Check ACL", icon: "fa-user-lock", desc: "Verify permissions", color: "purple" },
+            { id: "remote-install", name: "Install SW", icon: "fa-download", desc: "Install software", color: "blue" },
+            { id: "quarantine", name: "Quarantine", icon: "fa-ban", desc: "Isolate system", color: "red" }
+        ];
+
+        // Pen Testing Targets
+        const pentestTargets = [
+            { id: 1, name: "Web Server", ip: "192.168.1.100", difficulty: "Easy", vulnerabilities: ["SQLi", "XSS", "Weak Auth"] },
+            { id: 2, name: "Database Server", ip: "192.168.1.101", difficulty: "Medium", vulnerabilities: ["SQL Injection", "Privilege Escalation"] },
+            { id: 3, name: "File Server", ip: "192.168.1.102", difficulty: "Hard", vulnerabilities: ["SMB Exploit", "RCE"] },
+            { id: 4, name: "Mail Server", ip: "192.168.1.103", difficulty: "Medium", vulnerabilities: ["Open Relay", "Auth Bypass"] },
+            { id: 5, name: "VPN Gateway", ip: "192.168.1.104", difficulty: "Hard", vulnerabilities: ["SSL Strip", "MITM"] }
+        ];
+
+        // Bug Hunting Apps
+        const bugApps = [
+            { id: 1, name: "E-Commerce Site", url: "shop.issn.test", vulnerabilities: ["XSS", "CSRF", "IDOR"] },
+            { id: 2, name: "Social Network", url: "social.issn.test", vulnerabilities: ["XSS", "Open Redirect", "Info Disclosure"] },
+            { id: 3, name: "Banking Portal", url: "bank.issn.test", vulnerabilities: ["Session Fixation", "2FA Bypass"] },
+            { id: 4, name: "Admin Panel", url: "admin.issn.test", vulnerabilities: ["SQLi", "Auth Bypass", "RCE"] }
+        ];
+
+        // Cybersecurity Courses
+        const courses = [
+            {
+                id: 1,
+                title: "Web Security",
+                icon: "fa-globe",
+                description: "Learn to secure web applications",
+                lessons: [
+                    { title: "OWASP Top 10", content: "Critical web application security risks including injection, broken authentication, sensitive data exposure..." },
+                    { title: "XSS Prevention", content: "Cross-site scripting attacks and defense mechanisms like input validation, output encoding, CSP..." }
+                ]
+            },
+            {
+                id: 2,
+                title: "Network Pentesting",
+                icon: "fa-network-wired",
+                description: "Master network penetration testing",
+                lessons: [
+                    { title: "Reconnaissance", content: "Information gathering techniques: passive/active recon, OSINT, network mapping..." },
+                    { title: "Exploitation", content: "Vulnerability exploitation using Metasploit, custom exploits, post-exploitation..." }
+                ]
+            },
+            {
+                id: 3,
+                title: "Bug Bounty",
+                icon: "fa-bug",
+                description: "Professional bug hunting techniques",
+                lessons: [
+                    { title: "Methodology", content: "Systematic approach to finding vulnerabilities: recon, mapping, testing, reporting..." },
+                    { title: "Report Writing", content: "Writing effective bug reports with PoC, impact analysis, remediation steps..." }
+                ]
+            }
+        ];
+
+        // ==================== RENDER FUNCTIONS ====================
+
+        function renderStats() {
+            const container = document.getElementById('stats-container');
+            const progress = (playerStats.xp / playerStats.xpToNext) * 100;
+            
+            container.innerHTML = `
+                <div class="text-center">
+                    <div class="text-xs text-gray-500 dark:text-gray-400">LEVEL</div>
+                    <div class="text-2xl font-bold gradient-text">${playerStats.level}</div>
+                </div>
+                <div class="w-32">
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">XP: ${playerStats.xp}/${playerStats.xpToNext}</div>
+                    <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div class="h-full gradient-bg rounded-full" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xs text-gray-500 dark:text-gray-400">RESOLVED</div>
+                    <div class="text-2xl font-bold text-green-600 dark:text-green-400">${playerStats.ticketsResolved}</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xs text-gray-500 dark:text-gray-400">REPUTATION</div>
+                    <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">${playerStats.reputation}</div>
+                </div>
+            `;
+        }
+
+        function renderTickets(ticketData) {
+            const container = document.getElementById('ticket-list');
+            document.getElementById('ticket-count').textContent = ticketData.length;
+            
+            if (ticketData.length === 0) {
+                container.innerHTML = '<div class="text-center py-8 text-gray-400">No tickets match filters</div>';
+                return;
+            }
+            
+            container.innerHTML = ticketData.map(ticket => `
+                <div onclick="selectTicket('${ticket.id}')" 
+                     class="p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 cursor-pointer transition-all ${playerStats.currentTicket?.id === ticket.id ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700' : 'bg-white dark:bg-gray-800'}">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-mono text-gray-500 dark:text-gray-400">${ticket.id}</span>
+                        <span class="text-xs px-2 py-1 rounded-full ${getPriorityClass(ticket.priority)}">
+                            ${ticket.priority}
+                        </span>
+                    </div>
+                    <h4 class="font-medium text-sm mb-2 line-clamp-2">${ticket.title}</h4>
+                    <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                        <span>${ticket.user.split(' ')[0]}</span>
+                        <span>${ticket.category}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getPriorityClass(priority) {
+            const classes = {
+                "critical": "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400",
+                "high": "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400",
+                "medium": "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400",
+                "low": "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+            };
+            return classes[priority] || "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400";
+        }
+
+        function renderTools() {
+            const container = document.getElementById('tools-grid');
+            container.innerHTML = tools.map(tool => `
+                <button onclick="runTool('${tool.id}')" 
+                        class="p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-${tool.color}-300 dark:hover:border-${tool.color}-700 bg-white dark:bg-gray-800 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-${tool.color}-100 dark:bg-${tool.color}-900/30 flex items-center justify-center">
+                            <i class="fas ${tool.icon} text-${tool.color}-500"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="font-medium text-sm">${tool.name}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">${tool.desc}</div>
+                        </div>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function renderNetworkStatus() {
+            const container = document.getElementById('network-status');
+            const services = [
+                { name: "Main Server", status: "online", latency: "12ms" },
+                { name: "Email Gateway", status: "online", latency: "24ms" },
+                { name: "VPN Gateway", status: "online", latency: "45ms" },
+                { name: "File Server", status: "warning", latency: "120ms" },
+                { name: "Domain Controller", status: "online", latency: "8ms" }
+            ];
+            
+            container.innerHTML = services.map(service => `
+                <div class="flex items-center justify-between p-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center gap-2">
+                        <div class="status-indicator status-${service.status}"></div>
+                        <span class="text-sm">${service.name}</span>
+                    </div>
+                    <span class="text-xs font-mono ${service.status === 'online' ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}">
+                        ${service.latency}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function renderChat() {
+            if (!playerStats.currentTicket) return;
+            
+            const container = document.getElementById('chat-container');
+            const messages = playerStats.currentTicket.chatHistory;
+            
+            if (messages.length === 0) {
+                addChatMessage("user", `Hi, I'm ${playerStats.currentTicket.user}. I'm having an issue: ${playerStats.currentTicket.title}. Can you help me?`);
+            }
+            
+            container.innerHTML = messages.map(msg => `
+                <div class="slide-in ${msg.sender === 'user' ? '' : 'text-right'}">
+                    <div class="inline-block max-w-[80%] p-3 rounded-lg ${msg.sender === 'user' ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-100 dark:bg-blue-900/30'}">
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                            ${msg.sender === 'user' ? '<i class="fas fa-user mr-1"></i>User' : '<i class="fas fa-robot mr-1"></i>You'} • ${msg.time}
+                        </div>
+                        <div class="text-sm">${msg.text}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function renderPentestTargets() {
+            const container = document.getElementById('target-list');
+            container.innerHTML = pentestTargets.map(target => `
+                <div onclick="selectPentestTarget(${target.id})" 
+                     class="p-3 rounded-lg border border-gray-300 dark:border-gray-600 hover:border-red-400 dark:hover:border-red-600 cursor-pointer transition bg-white dark:bg-gray-800">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="font-medium">${target.name}</span>
+                        <span class="text-xs px-2 py-1 rounded-full ${target.difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : target.difficulty === 'Medium' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400' : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'}">
+                            ${target.difficulty}
+                        </span>
+                    </div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-2">${target.ip}</div>
+                    <div class="flex flex-wrap gap-1">
+                        ${target.vulnerabilities.map(vuln => `
+                            <span class="text-xs px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">
+                                ${vuln}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderBugApps() {
+            const container = document.getElementById('app-list');
+            container.innerHTML = bugApps.map(app => `
+                <div onclick="selectBugApp(${app.id})" 
+                     class="p-3 rounded-lg border border-gray-300 dark:border-gray-600 hover:border-yellow-400 dark:hover:border-yellow-600 cursor-pointer transition bg-white dark:bg-gray-800">
+                    <div class="font-medium mb-2">${app.name}</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 font-mono">${app.url}</div>
+                    <div class="flex flex-wrap gap-1">
+                        ${app.vulnerabilities.map(vuln => `
+                            <span class="text-xs px-2 py-0.5 rounded bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400">
+                                ${vuln}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderCourseModules() {
+            const container = document.getElementById('course-modules-list');
+            container.innerHTML = courses.map(course => {
+                const isCompleted = playerStats.completedCourses.includes(course.id);
+                return `
+                <div onclick="showCourseContent(${course.id})" 
+                     class="p-4 rounded-lg border ${isCompleted ? 'border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'} cursor-pointer transition">
+                    <div class="flex items-start gap-3">
+                        <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                            <i class="fas ${course.icon} text-blue-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold mb-1">${course.title}</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${course.description}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">${course.lessons.length} lessons</span>
+                                ${isCompleted ? '<span class="text-xs text-green-600 dark:text-green-400"><i class="fas fa-check mr-1"></i>Completed</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== GAME LOGIC ====================
+
+        function init() {
+            renderStats();
+            renderTickets(tickets.filter(t => t.status === 'open'));
+            renderTools();
+            renderNetworkStatus();
+            renderPentestTargets();
+            renderBugApps();
+            renderCourseModules();
+            populateCategoryFilter();
+            setupThemeToggle();
+            
+            // Auto-generate tickets
+            setInterval(() => {
+                if (Math.random() > 0.7 && playerStats.gameMode === 'service') {
+                    showToast("New Ticket", "High priority ticket assigned to queue", "fa-bell", "text-yellow-500");
+                }
+            }, 30000);
+        }
+
+        function setupThemeToggle() {
+            const toggle = document.getElementById('theme-toggle');
+            const icon = toggle.querySelector('i');
+            
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark-mode');
+                icon.className = 'fas fa-sun';
+            } else {
+                document.body.classList.remove('dark-mode');
+                icon.className = 'fas fa-moon';
+            }
+            
+            toggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.className = 'fas fa-sun';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.className = 'fas fa-moon';
+                }
+            });
+        }
+
+        function populateCategoryFilter() {
+            const select = document.getElementById('filter-category');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function filterTickets() {
+            const priority = document.getElementById('filter-priority').value;
+            const category = document.getElementById('filter-category').value;
+            
+            let filtered = tickets.filter(t => t.status === 'open');
+            
+            if (priority !== 'all') {
+                filtered = filtered.filter(t => t.priority === priority);
+            }
+            if (category !== 'all') {
+                filtered = filtered.filter(t => t.category === category);
+            }
+            
+            renderTickets(filtered);
+        }
+
+        function selectTicket(ticketId) {
+            const ticket = tickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+            
+            playerStats.currentTicket = ticket;
+            ticket.status = 'in-progress';
+            
+            // Update UI
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('ticket-workspace').classList.remove('hidden');
+            document.getElementById('btn-resolve').disabled = false;
+            
+            document.getElementById('ticket-id').textContent = ticket.id;
+            document.getElementById('ticket-title').textContent = ticket.title;
+            document.getElementById('ticket-user').textContent = ticket.user;
+            document.getElementById('ticket-category').textContent = ticket.category;
+            document.getElementById('ticket-time').textContent = ticket.timeOpened;
+            
+            const priorityEl = document.getElementById('ticket-priority');
+            priorityEl.textContent = ticket.priority.charAt(0).toUpperCase() + ticket.priority.slice(1);
+            priorityEl.className = `px-3 py-1 rounded-full text-sm font-medium ${getPriorityClass(ticket.priority)}`;
+            
+            renderChat();
+            filterTickets();
+            
+            setTimeout(() => {
+                addChatMessage("system", `Connected to ${ticket.user}'s workstation. Running initial diagnostics...`);
+            }, 500);
+        }
+
+        function addChatMessage(sender, text) {
+            if (!playerStats.currentTicket) return;
+            
+            playerStats.currentTicket.chatHistory.push({
+                sender: sender,
+                text: text,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            
+            renderChat();
+        }
+
+        function handleCommand(e) {
+            if (e.key !== 'Enter') return;
+            
+            const input = document.getElementById('command-input');
+            const cmd = input.value.trim();
+            input.value = '';
+            
+            if (!cmd) return;
+            
+            const output = document.getElementById('command-output');
+            output.innerHTML += `<div class="text-green-400">root@issn:~$ ${cmd}</div>`;
+            
+            setTimeout(() => {
+                const response = processCommand(cmd.toLowerCase());
+                output.innerHTML += `<div class="text-cyan-400">${response}</div>`;
+                output.scrollTop = output.scrollHeight;
+            }, 300);
+        }
+
+        function processCommand(cmd) {
+            const responses = {
+                'help': 'Available commands: ping, ipconfig, tracert, netstat, tasklist, whoami, systeminfo, cls',
+                'ipconfig': 'IPv4 Address: 192.168.1.105<br>Subnet Mask: 255.255.255.0<br>Default Gateway: 192.168.1.1',
+                'whoami': 'corp\\\\admin_sys',
+                'systeminfo': 'OS: Windows 10 Enterprise<br>Version: 21H2<br>Uptime: 15 days 4 hours',
+                'ping 192.168.1.1': 'Pinging 192.168.1.1...<br>Reply from 192.168.1.1: bytes=32 time=1ms TTL=64<br>Ping statistics: 0% loss'
+            };
+            
+            if (cmd === 'cls') {
+                document.getElementById('command-output').innerHTML = '';
+                return '';
+            }
+            
+            return responses[cmd] || `Command '${cmd}' executed successfully.`;
+        }
+
+        function clearTerminal() {
+            document.getElementById('command-output').innerHTML = '';
+        }
+
+        function runTool(toolId) {
+            if (!playerStats.currentTicket) {
+                showToast("No Active Ticket", "Select a ticket first", "fa-exclamation-triangle", "text-yellow-500");
+                return;
+            }
+            
+            const tool = tools.find(t => t.id === toolId);
+            addChatMessage('agent', `Running ${tool.name}...`);
+            
+            setTimeout(() => {
+                let result = '';
+                switch(toolId) {
+                    case 'ping':
+                        result = 'Connectivity test passed. 0% packet loss. Latency: 12ms';
+                        break;
+                    case 'scan-virus':
+                        result = 'Scan complete. No malware detected. System clean.';
+                        break;
+                    case 'reset-password':
+                        result = 'Password reset successful. Temporary password sent to user.';
+                        break;
+                    default:
+                        result = 'Diagnostic complete. No issues found.';
+                }
+                addChatMessage('system', result);
+            }, 1500);
+        }
+
+        function resolveTicket() {
+            if (!playerStats.currentTicket) return;
+            
+            const ticket = playerStats.currentTicket;
+            ticket.status = 'resolved';
+            ticket.resolved = true;
+            
+            playerStats.ticketsResolved++;
+            playerStats.xp += ticket.xpReward;
+            playerStats.reputation += 5;
+            
+            if (playerStats.xp >= playerStats.xpToNext) {
+                playerStats.level++;
+                playerStats.xp -= playerStats.xpToNext;
+                playerStats.xpToNext = Math.floor(playerStats.xpToNext * 1.5);
+                showToast("Level Up!", `You are now level ${playerStats.level}!`, "fa-trophy", "text-yellow-500");
+            }
+            
+            showToast("Ticket Resolved", `+${ticket.xpReward} XP earned`, "fa-check-circle", "text-green-500");
+            
+            playerStats.currentTicket = null;
+            document.getElementById('empty-state').classList.remove('hidden');
+            document.getElementById('ticket-workspace').classList.add('hidden');
+            document.getElementById('btn-resolve').disabled = true;
+            
+            renderStats();
+            filterTickets();
+        }
+
+        function escalateTicket() {
+            if (!playerStats.currentTicket) return;
+            addChatMessage('agent', 'Escalating to Level 2 Support...');
+            showToast("Ticket Escalated", "Moved to Tier 2 queue", "fa-arrow-up", "text-yellow-500");
+        }
+
+        function closeTicket() {
+            if (!playerStats.currentTicket) return;
+            playerStats.currentTicket.status = 'closed';
+            playerStats.currentTicket = null;
+            document.getElementById('empty-state').classList.remove('hidden');
+            document.getElementById('ticket-workspace').classList.add('hidden');
+            document.getElementById('btn-resolve').disabled = true;
+            filterTickets();
+        }
+
+        // ==================== GAME MODES ====================
+
+        function toggleGameMode(mode) {
+            playerStats.gameMode = mode;
+            
+            // Update button states
+            document.getElementById('btn-service').className = mode === 'service' 
+                ? 'px-4 py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 transition'
+                : 'px-4 py-2 rounded-lg border border-blue-500 text-blue-500 dark:text-blue-400 font-medium hover:bg-blue-50 dark:hover:bg-blue-500/10 transition';
+            
+            document.getElementById('btn-pentest').className = mode === 'pentest'
+                ? 'px-4 py-2 rounded-lg bg-purple-500 text-white font-medium hover:bg-purple-600 transition'
+                : 'px-4 py-2 rounded-lg border border-purple-500 text-purple-500 dark:text-purple-400 font-medium hover:bg-purple-50 dark:hover:bg-purple-500/10 transition';
+            
+            document.getElementById('btn-bug').className = mode === 'bug'
+                ? 'px-4 py-2 rounded-lg bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition'
+                : 'px-4 py-2 rounded-lg border border-yellow-500 text-yellow-500 dark:text-yellow-400 font-medium hover:bg-yellow-50 dark:hover:bg-yellow-500/10 transition';
+            
+            // Show/hide modes
+            document.getElementById('service-desk-mode').classList.toggle('hidden', mode !== 'service');
+            document.getElementById('pentest-mode').classList.toggle('hidden', mode !== 'pentest');
+            document.getElementById('bug-mode').classList.toggle('hidden', mode !== 'bug');
+        }
+
+        function selectPentestTarget(targetId) {
+            const target = pentestTargets.find(t => t.id === targetId);
+            document.getElementById('target-status').innerHTML = `
+                <span class="text-green-400">Target: ${target.name} (${target.ip})</span>
+            `;
+            
+            const output = document.getElementById('pentest-output');
+            output.innerHTML += `<div class="text-green-400">[+] Target selected: ${target.name}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function handlePentestCommand(e) {
+            if (e.key !== 'Enter') return;
+            
+            const input = document.getElementById('pentest-input');
+            const cmd = input.value.trim();
+            input.value = '';
+            
+            if (!cmd) return;
+            
+            const output = document.getElementById('pentest-output');
+            output.innerHTML += `<div class="text-red-400">hacker@issn:~$ ${cmd}</div>`;
+            
+            setTimeout(() => {
+                const responses = [
+                    `[+] Scanning target...`,
+                    `[+] Found open ports: 22, 80, 443`,
+                    `[+] Vulnerability detected: CVE-2021-12345`,
+                    `[+] Exploit successful! Gained root access.`
+                ];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                output.innerHTML += `<div class="text-cyan-400">${response}</div>`;
+                output.scrollTop = output.scrollHeight;
+                
+                if (response.includes('root access')) {
+                    playerStats.pentestScore += 100;
+                    showToast("Exploit Successful", "+100 Pentest Score", "fa-user-secret", "text-purple-500");
+                }
+            }, 500);
+        }
+
+        function runPentestTool(tool) {
+            const output = document.getElementById('pentest-output');
+            const messages = {
+                'scan': '[+] Running port scan...\n[+] Discovered 3 open ports',
+                'exploit': '[+] Attempting exploit...\n[+] Gained initial foothold',
+                'crack': '[+] Cracking password hash...\n[+] Password found: admin123'
+            };
+            
+            output.innerHTML += `<div class="text-yellow-400">${messages[tool]}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function selectBugApp(appId) {
+            const app = bugApps.find(a => a.id === appId);
+            document.getElementById('current-url').textContent = `https://${app.url}`;
+            
+            const webInterface = document.getElementById('web-interface');
+            webInterface.innerHTML = `
+                <div class="max-w-md mx-auto">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-bold mb-2">${app.name}</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Test for vulnerabilities</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Username</label>
+                            <input type="text" class="w-full px-3 py-2 border rounded-lg" value="admin">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Password</label>
+                            <input type="password" class="w-full px-3 py-2 border rounded-lg" value="password123">
+                        </div>
+                        <button class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            Login
+                        </button>
+                    </div>
+                    
+                    <div class="mt-8 text-center text-sm text-gray-500">
+                        Try injecting: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">' OR '1'='1</code>
+                    </div>
+                </div>
+            `;
+        }
+
+        function runBugTool(tool) {
+            const vulnerabilities = {
+                'xss': { name: 'Cross-Site Scripting', bounty: 500 },
+                'sqli': { name: 'SQL Injection', bounty: 1000 },
+                'csrf': { name: 'CSRF Vulnerability', bounty: 300 },
+                'idor': { name: 'IDOR', bounty: 750 }
+            };
+            
+            const vuln = vulnerabilities[tool];
+            if (Math.random() > 0.3) {
+                playerStats.bugBounty += vuln.bounty;
+                
+                const reports = document.getElementById('bug-reports');
+                reports.innerHTML = `
+                    <div class="slide-in p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="font-medium">${vuln.name}</span>
+                            <span class="text-sm font-bold text-green-600 dark:text-green-400">$${vuln.bounty}</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Found in login form</p>
+                        <div class="text-xs text-gray-500">Severity: High • Status: Reported</div>
+                    </div>
+                ` + reports.innerHTML;
+                
+                showToast("Vulnerability Found", `+$${vuln.bounty} bounty`, "fa-bug", "text-yellow-500");
+            }
+        }
+
+        // ==================== COURSE SYSTEM ====================
+
+        function toggleCourseModal() {
+            const modal = document.getElementById('course-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                renderCourseModules();
+            }
+        }
+
+        function showCourseContent(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            const container = document.getElementById('course-content');
+            
+            container.innerHTML = `
+                <div class="fade-in">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-xl gradient-bg flex items-center justify-center">
+                            <i class="fas ${course.icon} text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">${course.title}</h3>
+                            <p class="text-gray-600 dark:text-gray-400">${course.description}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        ${course.lessons.map((lesson, idx) => `
+                            <div class="border border-gray-200 dark:border-gray-700 rounded-xl p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                                        <span class="font-bold">${idx + 1}</span>
+                                    </div>
+                                    <h4 class="text-lg font-bold">${lesson.title}</h4>
+                                </div>
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${lesson.content}</p>
+                                <button onclick="completeLesson(${courseId}, ${idx})" class="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition">
+                                    Mark as Complete
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeLesson(courseId, lessonIdx) {
+            if (!playerStats.completedCourses.includes(courseId)) {
+                playerStats.completedCourses.push(courseId);
+                playerStats.xp += 50;
+                renderStats();
+                renderCourseModules();
+                showToast("Lesson Completed", "+50 XP earned", "fa-check-circle", "text-green-500");
+            }
+        }
+
+        // ==================== UTILITIES ====================
+
+        function showToast(title, message, icon, colorClass) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-message').textContent = message;
+            document.getElementById('toast-icon').innerHTML = `<i class="fas ${icon} ${colorClass}"></i>`;
+            
+            toast.classList.remove('translate-y-20');
+            setTimeout(hideToast, 3000);
+        }
+
+        function hideToast() {
+            document.getElementById('toast').classList.add('translate-y-20');
+        }
+
+        function showLeaderboard() {
+            showToast("Leaderboard", "Coming soon in v2.1", "fa-trophy", "text-yellow-500");
+        }
+
+        function showSettings() {
+            showToast("Settings", "Customize your experience", "fa-cog", "text-gray-500");
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
-
-
-
